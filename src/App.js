@@ -32,7 +32,18 @@ function App() {
   const [data2, setData2] = useState([...data]);
 
   const deleteData = (date) => {
+    const msg = "Are you sure you want to delete?";
+    const result = window.confirm(msg);
+    if (!result) {
+      return;
+    }
     setData(prev => {
+      return prev.filter((entry) => {
+        return entry.date !== date;
+      });
+    });
+
+    setData2(prev => {
       return prev.filter((entry) => {
         return entry.date !== date;
       });
