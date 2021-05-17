@@ -6,11 +6,11 @@ const Row = ({ rowData, onDelete }) => {
             <td>{rowData.email}</td>
             <td>{rowData.phone}</td>
             <td>{rowData.date}</td>
-            <td><a href='apple.com'>Edit</a> <a 
+            <td><a href='apple.com'>Edit</a> <u 
             onClick={(event) => {
                 event.preventDefault();
                 onDelete(rowData.date);
-            }} href='apple.com'>Delete</a></td>
+            }}>Delete</u></td>
 
         </tr>
     )

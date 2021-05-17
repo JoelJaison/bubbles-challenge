@@ -1,10 +1,10 @@
 import SearchBar from './SearchBar';
 import Button from './Button';
-const Heading = ({ title })  => {
+const Heading = ({ title, updateData })  => {
     return (
         <div>
             <h1>{title}</h1>
-            <SearchBar />
+            <SearchBar updateData={updateData} />
             <Button />
         </div>
     )
