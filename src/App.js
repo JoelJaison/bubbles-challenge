@@ -1,6 +1,8 @@
 import Heading from './components/Heading';
 import Grid from './components/Grid';
+import Edit from './components/Edit';
 import { useState } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
   const headings = [
     'Name',
@@ -63,10 +65,21 @@ function App() {
     });
   };
   return (
-    <div className="App">
-      <Heading title='My Customers' updateData={updateData} />
+    <Router>
+      <Route path="/" exact
+      render={() => (
+        <Heading title='My Customers' updateData={updateData} />
+      )}
+      />
+     <Route path='/' exact 
+      render={() => (
       <Grid headings={headings} data={data2} onDelete={deleteData} />
-    </div>
+      )}
+    />
+    <Route path='/edit'
+    component={Edit}
+    />
+    </Router>
   );
 }
 
