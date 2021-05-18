@@ -1,6 +1,7 @@
 import Heading from './components/Heading';
 import Grid from './components/Grid';
 import Edit from './components/Edit';
+import Add from './components/Add';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
@@ -31,7 +32,7 @@ function App() {
     }
   ]);
 
-  const [data2, setData2] = useState([...data]);
+  const [query, setQuery] = useState('');
 
   const deleteData = (date) => {
     const msg = "Are you sure you want to delete?";
@@ -44,40 +45,43 @@ function App() {
         return entry.date !== date;
       });
     });
-
-    setData2(prev => {
-      return prev.filter((entry) => {
-        return entry.date !== date;
-      });
-    });
   };
 
-  const updateData = (query) => {
-    setData2([...data]);
-    setData2(prev => {
-      return prev.filter(entry => {
-        return entry.name.startsWith(query) ||
-          entry.username.startsWith(query) ||
-          entry.email.startsWith(query) ||
-          String(entry.phone).startsWith(query) ||
-          entry.date.startsWith(query);
-      });
-    });
+  const matchesQuery = (task) => {
+    return task.name.startsWith(query) ||
+    task.username.startsWith(query) ||
+    task.email.startsWith(query) ||
+    String(task.phone).startsWith(query) ||
+    task.date.startsWith(query);
   };
+
+
+  const addUser = (name, username, email, phone) => {
+    const newUser = { name, username, email, phone };
+    newUser['date'] = String(Date.now());
+    setData(prev => [newUser, ...prev]);
+  }
   return (
     <Router>
       <Route path="/" exact
       render={() => (
-        <Heading title='My Customers' updateData={updateData} />
+        <Heading title='My Customers' 
+        updateData={(txt) => setQuery(txt)} />
       )}
       />
      <Route path='/' exact 
       render={() => (
-      <Grid headings={headings} data={data2} onDelete={deleteData} />
+      <Grid headings={headings} data={data} 
+      onDelete={deleteData} toRender={matchesQuery} />
       )}
     />
     <Route path='/edit'
     component={Edit}
+    />
+    <Route path='/add'
+    render={() => (
+      <Add onSubmit={addUser} />
+    )}
     />
     </Router>
   );

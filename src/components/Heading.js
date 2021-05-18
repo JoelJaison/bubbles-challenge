@@ -6,7 +6,7 @@ const Heading = ({ title, updateData })  => {
         <div>
             <h1>{title}</h1>
             <SearchBar updateData={updateData} />
-            <Link to='./edit'>
+            <Link to='./add'>
                 <Button />
             </Link>
         </div>

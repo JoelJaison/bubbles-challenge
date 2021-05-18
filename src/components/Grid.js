@@ -1,5 +1,5 @@
 import Row from './Row';
-const Grid = ({ headings, data, onDelete }) => {
+const Grid = ({ headings, data, onDelete, toRender }) => {
     return (
         <table className='grid'>
             <tbody>
@@ -8,7 +8,9 @@ const Grid = ({ headings, data, onDelete }) => {
                     return <th key={index}>{heading}</th>
                 })}
             </tr>
-            {data.map(((entry, index) => {
+            {data.filter((entry) => {
+                return toRender(entry);
+            }).map(((entry, index) => {
                 return <Row rowData={entry} key={index} 
                 onDelete={onDelete}/>
             }))}

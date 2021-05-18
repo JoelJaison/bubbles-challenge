@@ -1,8 +1,8 @@
-const Edit = () => {
+const Edit = ({ onSubmit }) => {
     return (
-        <div>
-            <h1>Edits</h1>
-        </div>
+        <form>
+            <input type='text' />
+        </form>
     )
 }
 
