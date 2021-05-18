@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 const Row = ({ rowData, onDelete }) => {
     return (
         <tr>
@@ -6,11 +7,17 @@ const Row = ({ rowData, onDelete }) => {
             <td>{rowData.email}</td>
             <td>{rowData.phone}</td>
             <td>{rowData.date}</td>
-            <td><a href='apple.com'>Edit</a> <u 
-            onClick={(event) => {
-                event.preventDefault();
-                onDelete(rowData.date);
-            }}>Delete</u></td>
+            <td>
+                <Link to={`/edit/${rowData.name}`}>
+                    Edit&nbsp; 
+                </Link>
+                <u onClick={(event) => {
+                    event.preventDefault();
+                    onDelete(rowData.date);
+                }}>
+                    Delete
+                </u>
+            </td>
 
         </tr>
     )

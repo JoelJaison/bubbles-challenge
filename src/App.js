@@ -21,14 +21,14 @@ function App() {
       username: 'test1',
       email: 'test@test.com',
       phone: 10101010,
-      date: '1/1/2001'
+      date: 2470
     },
     {
       name: 'tejoel',
       username: 'joeljaison',
       email: 'test2@test2.com',
       phone: 12345,
-      date: '9/14/2002'
+      date: 9085
     }
   ]);
 
@@ -62,6 +62,14 @@ function App() {
     setData(prev => [newUser, ...prev]);
     setQuery('');
   }
+
+  const editUser = (newUser) => {
+    setData(prev => {
+      return prev.map((item) => {
+        return item.date === newUser.date ? newUser : item;
+      })
+    })
+  }
   return (
     <Router>
       <Route path="/" exact
@@ -76,8 +84,8 @@ function App() {
       onDelete={deleteData} toRender={matchesQuery} />
       )}
     />
-    <Route path='/edit'
-    component={Edit}
+    <Route path='/edit/:id' render={({ match }) => 
+    <Edit onSubmit={editUser} id={match.params.id} data={data} />}
     />
     <Route path='/add'
     render={() => (
