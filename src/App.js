@@ -60,6 +60,7 @@ function App() {
     const newUser = { name, username, email, phone };
     newUser['date'] = String(Date.now());
     setData(prev => [newUser, ...prev]);
+    setQuery('');
   }
   return (
     <Router>
