@@ -13,7 +13,7 @@ const Row = ({ rowData, onDelete }) => {
                 </Link>
                 <u onClick={(event) => {
                     event.preventDefault();
-                    onDelete(rowData.id);
+                    onDelete(rowData);
                 }}>
                     Delete
                 </u>

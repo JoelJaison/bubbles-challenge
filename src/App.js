@@ -17,7 +17,7 @@ function App() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
 
-  const deleteData = (id) => {
+  const deleteData = async (item) => {
     const msg = "Are you sure you want to delete?";
     const result = window.confirm(msg);
     if (!result) {
@@ -25,9 +25,11 @@ function App() {
     }
     setData(prev => {
       return prev.filter((entry) => {
-        return entry.id !== id;
+        return entry.id !== item.id;
       });
     });
+    const response = await makeRequest('DELETE', item);
+    console.log(response);
   };
 
 
@@ -35,22 +37,37 @@ function App() {
     return task.first_name.startsWith(query) ||
     task.last_name.startsWith(query) ||
     task.email.startsWith(query) ||
-    String(task.id).startsWith(query) ||
-    task.avatar.startsWith(query);
+    String(task.id).startsWith(query); 
   };
 
-  const addUser = (newUser) => {
-    newUser['id'] = String(Date.now());
-    setData(prev => [newUser, ...prev]);
+  const addUser = async (newUser) => {
+    newUser['id'] = data[data.length - 1].id + 1; 
+    setData(prev => [...prev, newUser]);
     setQuery('');
+    const result = await makeRequest('POST', newUser);
+    console.log(result);
   }
 
-  const editUser = (newUser) => {
+  const makeRequest = async (action, data) => {
+    const response = await fetch('https://reqres.in/api/users', {
+      method: action,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const end = action === 'DELETE' ? {} : await response.json();
+    return end;
+  }
+
+  const editUser = async (newUser) => {
     setData(prev => {
       return prev.map((item) => {
         return item.id === newUser.id ? newUser : item;
       })
-    })
+    });
+    const result = await makeRequest('PUT', newUser);
+    console.log(result);
   };
 
   const fetchData = async () => {
