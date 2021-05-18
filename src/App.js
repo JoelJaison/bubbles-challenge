@@ -2,6 +2,7 @@ import Heading from './components/Heading';
 import Grid from './components/Grid';
 import Edit from './components/Edit';
 import Add from './components/Add';
+import LoginPage from './components/LoginPage';
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
@@ -16,6 +17,7 @@ function App() {
 
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const deleteData = async (item) => {
     const msg = "Are you sure you want to delete?";
@@ -28,10 +30,8 @@ function App() {
         return entry.id !== item.id;
       });
     });
-    const response = await makeRequest('DELETE', item);
-    console.log(response);
+    await makeRequest('DELETE', item);
   };
-
 
   const matchesQuery = (task) => {
     return task.first_name.startsWith(query) ||
@@ -41,13 +41,11 @@ function App() {
   };
 
   const addUser = async (newUser) => {
-    newUser['id'] = data[data.length - 1].id + 1; 
-    setData(prev => [...prev, newUser]);
-    setQuery('');
     const result = await makeRequest('POST', newUser);
+    setData(prev => [...prev, result]);
+    setQuery('');
     console.log(result);
   }
-
   const makeRequest = async (action, data) => {
     const response = await fetch('https://reqres.in/api/users', {
       method: action,
@@ -64,12 +62,11 @@ function App() {
     setData(prev => {
       return prev.map((item) => {
         return item.id === newUser.id ? newUser : item;
-      })
+      });
     });
     const result = await makeRequest('PUT', newUser);
     console.log(result);
   };
-
   const fetchData = async () => {
     const result = await fetch('https://reqres.in/api/users');
     const newResult = await result.json();
@@ -79,21 +76,24 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []) 
-
   return (
     <Router>
-      <Route path="/" exact
+      {!loggedIn && <LoginPage onSubmit={(event) => {
+        event.preventDefault();
+        setLoggedIn(prev => !prev);
+      }} />}
+      {loggedIn && <Route path="/" exact
       render={() => (
         <Heading title='My Customers' 
         updateData={(txt) => setQuery(txt)} />
       )}
-      />
-     <Route path='/' exact 
+      />}
+     {loggedIn && <Route path='/' exact 
       render={() => (
       <Grid headings={headings} data={data} 
       onDelete={deleteData} toRender={matchesQuery} />
       )}
-    />
+    />}
     <Route path='/edit/:id' render={({ match }) => 
     <Edit onSubmit={editUser} id={match.params.id} data={data} />}
     />
@@ -105,5 +105,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

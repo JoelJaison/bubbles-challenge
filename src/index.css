@@ -36,3 +36,8 @@ code {
 .label {
   margin-top: 30px;
 }
+
+.login {
+  display: flex;
+  justify-content: center;
+}
