@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Edit = ({ onSubmit, id, data }) => {
 
     const user = data.filter((item) => {
-        return item.name === id;
+        return String(item.id) === id;
     })[0];
 
     const [newUser, setNewUser] = useState({...user});
@@ -17,15 +17,15 @@ const Edit = ({ onSubmit, id, data }) => {
         <form>
             <h1>Edit user</h1>
             <div className='label'>
-                <label>Name:</label>
-                <input type='text' value={newUser.name}
-                className='input' onChange={onChange} id='name' />
+                <label>First Name:</label>
+                <input type='text' value={newUser.first_name}
+                className='input' onChange={onChange} id='first_name' />
                 <br></br>
             </div>
             <div className='label'>
-                <label>Username:</label>
-                <input type='text' value={newUser.username}
-                className='input' onChange={onChange} id='username' />
+                <label>Last Name:</label>
+                <input type='text' value={newUser.last_name}
+                className='input' onChange={onChange} id='last_name' />
                 <br></br>
             </div>
             <div className='label'>
@@ -35,9 +35,9 @@ const Edit = ({ onSubmit, id, data }) => {
                 <br></br>
             </div>
             <div className='label'>
-                <label>Phone:</label>
-                <input type='text' value={newUser.phone}
-                className='input' onChange={onChange} id='phone' />
+                <label>Avatar Link:</label>
+                <input type='text' value={newUser.avatar}
+                className='input' onChange={onChange} id='avatar' />
                 <br></br>
             </div>
             <Link to='/'>

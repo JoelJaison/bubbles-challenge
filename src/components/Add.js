@@ -1,59 +1,43 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 const Add = ({ onSubmit }) => {
-    const [name, setName] = useState('');
-    const onChangeName = ({ target }) => {
-        const value = target.value;
-        setName(value);
-    }
-    const [user, setUser] = useState('');
-    const onChangeUser = ({ target }) => {
-        const value = target.value;
-        setUser(value);
-    }
-
-    const [email, setEmail] = useState('');
-    const onChangeEmail = ({ target }) => {
-        const value = target.value;
-        setEmail(value);
-    }
-
-    const [number, setNumber] = useState('');
-    const onChangeNumber = ({ target }) => {
-        const value = target.value;
-        setNumber(value);
-    }
+    
+    const [newUser, setNewUser] = useState({});
+    const onChange = ({ target }) => {
+        const {id, value} = target;
+        setNewUser(prev => ({...prev, [id]: value}));
+    };
 
     return (
         <form>
             <h1>Add user</h1>
             <div className='label'>
-                <label>Name:</label>
-                <input type='text' placeholder='Enter name'
-                className='input' onChange={onChangeName} />
+                <label>First Name:</label>
+                <input type='text' placeholder='Enter first name'
+                className='input' id='first_name' onChange={onChange} />
                 <br></br>
             </div>
             <div className='label'>
-                <label>Username:</label>
-                <input type='text' placeholder='Enter username'
-                className='input' onChange={onChangeUser} />
+                <label>Last Name:</label>
+                <input type='text' placeholder='Enter last name'
+                className='input' id='last_name' onChange={onChange} />
                 <br></br>
             </div>
             <div className='label'>
                 <label>Email:</label>
                 <input type='text' placeholder='Enter email'
-                className='input' onChange={onChangeEmail} />
+                className='input' id='email' onChange={onChange} />
                 <br></br>
             </div>
             <div className='label'>
-                <label>Phone:</label>
-                <input type='text' placeholder='Enter number'
-                className='input' onChange={onChangeNumber} />
+                <label>Avatar Link:</label>
+                <input type='text' placeholder='Enter Image Link'
+                className='input' id='avatar' onChange={onChange} />
                 <br></br>
             </div>
             <Link to='/'>
                 <button className='btn' onClick={() => {
-                    onSubmit(name, user, email, number);
+                    onSubmit(newUser);
                 }}>
                     Submit
                 </button>
