@@ -7,8 +7,8 @@ const SearchBar = ({ updateData }) => {
     };
     return (
         <input className='bar' value={contents} onChange={onChange}
-        placeholder='Search for names, username, 
-        email, phone...'></input>
+        placeholder='Search for first name, last name, 
+        email, id...'></input>
     )
 }
 
