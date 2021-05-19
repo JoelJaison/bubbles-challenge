@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 const Row = ({ rowData, onDelete }) => {
+    const [background, setBackground] = useState('white');
     return (
-        <tr>
+        <tr style={{backgroundColor: background}} onMouseOver={() => 
+        setBackground('lightgray')} onMouseOut={() => setBackground('white')}>
             <td>{rowData.first_name}</td>
             <td>{rowData.last_name}</td>
             <td>{rowData.email}</td>
