@@ -64,6 +64,7 @@ function App() {
         return item.id === newUser.id ? newUser : item;
       });
     });
+    setQuery('');
     const result = await makeRequest('PUT', newUser);
     console.log(result);
   };
