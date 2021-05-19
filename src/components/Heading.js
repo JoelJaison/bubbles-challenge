@@ -1,5 +1,4 @@
 import SearchBar from './SearchBar';
-import Button from './Button';
 import { Link } from 'react-router-dom';
 const Heading = ({ title, updateData })  => {
     return (
@@ -7,7 +6,7 @@ const Heading = ({ title, updateData })  => {
             <h1>{title}</h1>
             <SearchBar updateData={updateData} />
             <Link to='./add'>
-                <Button />
+                <button className='btn'>Add User</button>
             </Link>
         </div>
     )
